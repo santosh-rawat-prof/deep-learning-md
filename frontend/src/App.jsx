@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import UploadCard from "./components/UploadCard";
+import ResultCard from "./components/ResultCard";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [result, setResult] = useState(null);
+
+  const handleUpload = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const imagePreview = URL.createObjectURL(file);
+
+    try {
+      const res = await axios.post(
+        "http://localhost:8080/api/predict",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      setResult({ ...res.data, imagePreview });
+    } catch (err) {
+      toast.error("Prediction failed. Please try again.");
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen bg-gray-100 py-10 px-4 font-sans">
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
+          Medical Equipment Identifier
+        </h1>
+        <UploadCard onUpload={handleUpload} />
+        {result && <ResultCard result={result} />}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <ToastContainer />
+    </div>
+  );
 }
 
-export default App
+export default App;
