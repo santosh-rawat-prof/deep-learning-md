@@ -25,7 +25,7 @@ public class HomeController {
     private String filePath = System.getProperty("user.dir") + File.separator + "images";
     
     @PostMapping("/predict")
-    public ResponseEntity<?> classify(@RequestParam("image")MultipartFile image) {
+    public ResponseEntity<?> classify(@RequestParam("file")MultipartFile image) {
 
         String fileName = null;
         try {
