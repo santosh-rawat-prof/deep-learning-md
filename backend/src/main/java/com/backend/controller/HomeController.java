@@ -22,7 +22,7 @@ public class HomeController {
         Result result = new Result();
         result.setEquipment("Needle");
         result.setBrand("J&J");
-        result.setConfidence("80%");
+        result.setConfidence("80");
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
