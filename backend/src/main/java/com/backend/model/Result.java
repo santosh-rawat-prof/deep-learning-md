@@ -5,6 +5,8 @@ public class Result {
     private String brand;
     private String confidence;
 
+    public Result() {}
+
     public Result(String equipment, String brand, String confidence) {
         this.equipment = equipment;
         this.brand = brand;
