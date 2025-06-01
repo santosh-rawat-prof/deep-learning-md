@@ -14,6 +14,8 @@ function App() {
     formData.append("file", file);
     const imagePreview = URL.createObjectURL(file);
 
+    console.log(formData);
+
     try {
       const res = await axios.post(
         "http://localhost:8080/api/predict",
@@ -24,7 +26,7 @@ function App() {
       );
       setResult({ ...res.data, imagePreview });
     } catch (err) {
-      toast.error("Prediction failed. Please try again.");
+      toast.error(`Prediction failed. Please try again. ${err.message}`);
     }
   };
 
@@ -35,7 +37,7 @@ function App() {
           Medical Equipment Identifier
         </h1>
         <UploadCard onUpload={handleUpload} />
-        <PredictBtn/>
+        <PredictBtn />
         {result && <ResultCard result={result} />}
       </div>
       <ToastContainer />
