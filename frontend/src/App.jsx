@@ -4,6 +4,7 @@ import ResultCard from "./components/ResultCard";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PredictBtn from "./components/PredictBtn";
 
 function App() {
   const [result, setResult] = useState(null);
@@ -34,6 +35,7 @@ function App() {
           Medical Equipment Identifier
         </h1>
         <UploadCard onUpload={handleUpload} />
+        <PredictBtn/>
         {result && <ResultCard result={result} />}
       </div>
       <ToastContainer />
