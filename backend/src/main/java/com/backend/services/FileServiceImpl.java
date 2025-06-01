@@ -27,7 +27,7 @@ public class FileServiceImpl implements FileService {
         String format = fileName.substring(fileName.lastIndexOf('.'));
 
         // check the file format
-        if(!format.equalsIgnoreCase(".jpeg")) {
+        if(!format.equalsIgnoreCase(".jpg")) {
             return "Invalid Format";
         }
 
