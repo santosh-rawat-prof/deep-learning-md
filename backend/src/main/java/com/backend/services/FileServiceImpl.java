@@ -26,11 +26,6 @@ public class FileServiceImpl implements FileService {
         // Get the format
         String format = fileName.substring(fileName.lastIndexOf('.'));
 
-        // check the file format
-        if(!format.equalsIgnoreCase(".jpg")) {
-            return "Invalid Format";
-        }
-
         // change the file name to random name
         String randomFileName = UUID.randomUUID().toString() + format;
 

@@ -30,19 +30,10 @@ public class HomeController {
         String fileName = null;
         try {
             fileName = fileService.uploadFile(filePath, image);
-            if (fileName.equals("Invalid Format")) {
-                return new ResponseEntity<>("Format not supported. Only JPG format support.", HttpStatus.BAD_REQUEST);
-            }
         } catch (IOException e) {
             return new ResponseEntity<>("Internal Server Error: " + e.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(fileName, HttpStatus.CREATED);
-
-        // Result result = new Result();
-        // result.setEquipment("Needle");
-        // result.setBrand("J&J");
-        // result.setConfidence("80");
-        // return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     /* Test your frontend using this API */
