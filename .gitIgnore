@@ -1,0 +1,9 @@
+* Ignore all images file to upload on git
+/backend/images
+
+
+
+
+
+* Ignore all cache file on ai-ml backend code
+/ai-ml/__pycache__
