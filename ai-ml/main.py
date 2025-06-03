@@ -1,5 +1,11 @@
-# Run command: 
+## Run command: 
 # uvicorn main:app --host 0.0.0.0 --port 8000
+
+
+## For installing all the dependency
+# Run command:
+# pip install torch torchvision fastapi uvicorn python-multipart pillow
+
 
 
 from fastapi import FastAPI, File, UploadFile
@@ -10,8 +16,10 @@ import torchvision.transforms as transforms
 import io
 from torchvision import models
 import torch.nn as nn
+import torch.nn.functional as F
 
-class_labels = ["Scalpel", "Forceps", "Retractor", "Scissors"]
+# class_labels = ["Scalpel", "Forceps", "Retractor", "Scissors"]
+class_labels =  ['Curved Mayo Scissor', 'Scalpel', 'Straight Dissection Clamp', 'Straight Mayo Scissor']
 
 def load_model():
     model = models.resnet18(weights=None)
@@ -36,6 +44,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+
 @app.post("/predict")
 async def predict(file: UploadFile = File(...)):
     image_bytes = await file.read()
@@ -44,7 +54,12 @@ async def predict(file: UploadFile = File(...)):
 
     with torch.no_grad():
         outputs = model(input_tensor)
-        predicted_class_idx = torch.argmax(outputs, dim=1).item()
+        probabilities = F.softmax(outputs, dim=1)
+        predicted_class_idx = torch.argmax(probabilities, dim=1).item()
+        confidence = probabilities[0][predicted_class_idx].item()
         predicted_class_name = class_labels[predicted_class_idx]
 
-    return {"prediction": predicted_class_name}
+    return {
+        "prediction": predicted_class_name,
+        "confidence": round(confidence, 4)
+    }

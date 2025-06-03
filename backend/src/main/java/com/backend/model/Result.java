@@ -7,10 +7,6 @@ public class Result {
 
     public Result() {}
 
-    public Result(String name) {
-        this.equipment = name;
-    }
-
     public Result(String equipment, String brand, String confidence) {
         this.equipment = equipment;
         this.brand = brand;

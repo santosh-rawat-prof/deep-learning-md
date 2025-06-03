@@ -67,7 +67,14 @@ public class HomeController {
         // Convert the response into json object and load into Result model
         String jsonString = response.getBody();
         JSONObject jsonObject = new JSONObject(jsonString);
-        Result result = new Result(jsonObject.getString("prediction"));
+
+        String name = jsonObject.getString("prediction");
+        String confidence = String.valueOf(100 * Double.valueOf(String.valueOf(jsonObject.get("confidence"))));
+
+        Result result = new Result();
+        result.setEquipment(name);
+        result.setConfidence(confidence);
+
         return ResponseEntity.ok(result);
     }
 
