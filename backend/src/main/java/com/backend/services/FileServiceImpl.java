@@ -35,6 +35,6 @@ public class FileServiceImpl implements FileService {
         // Copy the file to destination
         Files.copy(file.getInputStream(), Paths.get(savePath.toURI()));
 
-        return fileName;
+        return randomFileName;
     }
 }
