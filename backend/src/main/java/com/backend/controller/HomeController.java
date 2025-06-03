@@ -2,6 +2,7 @@ package com.backend.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 import org.json.JSONObject;
 
@@ -69,11 +70,13 @@ public class HomeController {
         JSONObject jsonObject = new JSONObject(jsonString);
 
         String name = jsonObject.getString("prediction");
-        String confidence = String.valueOf(100 * Double.valueOf(String.valueOf(jsonObject.get("confidence"))));
+        double confidence = 100 * Double.valueOf(String.valueOf(jsonObject.get("confidence")));
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+        String confidenceLabel = decimalFormat.format(confidence);
 
         Result result = new Result();
         result.setEquipment(name);
-        result.setConfidence(confidence);
+        result.setConfidence(confidenceLabel);
 
         return ResponseEntity.ok(result);
     }
