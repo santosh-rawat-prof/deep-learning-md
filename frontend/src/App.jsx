@@ -24,6 +24,8 @@ function App() {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
+      console.log(res);
+
       setResult({ ...res.data, imagePreview });
     } catch (err) {
       toast.error(`Prediction failed. Please try again. ${err.message}`);
