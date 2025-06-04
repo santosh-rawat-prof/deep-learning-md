@@ -4,17 +4,20 @@ import ResultCard from "./components/ResultCard";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PredictBtn from "./components/PredictBtn";
 
 function App() {
   const [result, setResult] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const handleUpload = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
     const imagePreview = URL.createObjectURL(file);
 
-    console.log(formData);
+    setSelectedImage(imagePreview);
+    setLoading(true);
+    setResult(null); // Clear previous result
 
     try {
       const res = await axios.post(
@@ -24,11 +27,12 @@ function App() {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      console.log(res);
 
       setResult({ ...res.data, imagePreview });
     } catch (err) {
       toast.error(`Prediction failed. Please try again. ${err.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -38,11 +42,25 @@ function App() {
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Medical Equipment Identifier
         </h1>
+
         <UploadCard onUpload={handleUpload} />
-        <PredictBtn />
-        {result && <ResultCard result={result} />}
+
+        {loading && selectedImage && (
+          <div className="mt-6 flex flex-col items-center">
+            <p className="text-gray-700 mb-2 font-medium animate-pulse">
+              Processing image...
+            </p>
+            <img
+              src={selectedImage}
+              alt="Processing"
+              className="w-36 h-36 object-cover rounded-lg shadow-md animate-pulse border border-gray-300"
+            />
+          </div>
+        )}
+
+        {!loading && result && <ResultCard result={result} />}
       </div>
-      <ToastContainer />
+      <ToastContainer position="bottom-center" />
     </div>
   );
 }
