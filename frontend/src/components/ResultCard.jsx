@@ -6,9 +6,9 @@ const ResultCard = ({ result }) => {
       initial={{ y: 30, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="bg-white rounded-xl shadow-lg p-6 mt-8 border border-gray-100"
+      className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 mt-8 border border-gray-100 dark:border-gray-700"
     >
-      <h2 className="text-xl font-bold text-gray-800 mb-4">
+      <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-4">
         Prediction Result
       </h2>
 
@@ -23,10 +23,10 @@ const ResultCard = ({ result }) => {
         />
 
         <div className="flex-1">
-          <p className="text-xl text-emerald-700 font-bold">
+          <p className="text-xl text-emerald-700 dark:text-emerald-400 font-bold">
             {result.equipment}
           </p>
-          <p className="text-gray-600 mt-1">
+          <p className="text-gray-600 dark:text-gray-300 mt-1">
             Brand:{" "}
             <span className="font-medium">
               {result.brand || "Not detected"}
@@ -34,8 +34,10 @@ const ResultCard = ({ result }) => {
           </p>
 
           <div className="mt-4">
-            <p className="text-sm text-gray-500 mb-1">Confidence Score</p>
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
+              Confidence Score
+            </p>
+            <div className="w-full bg-gray-200 dark:bg-gray-600 rounded-full h-3">
               <motion.div
                 className="bg-emerald-500 h-3 rounded-full"
                 initial={{ width: "0%" }}
@@ -43,7 +45,7 @@ const ResultCard = ({ result }) => {
                 transition={{ duration: 1 }}
               />
             </div>
-            <p className="text-xs text-right text-gray-500 mt-1">
+            <p className="text-xs text-right text-gray-500 dark:text-gray-400 mt-1">
               {result.confidence}%
             </p>
           </div>
